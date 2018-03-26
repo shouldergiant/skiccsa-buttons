@@ -1,0 +1,7 @@
+{
+  "name": "app",
+  "short_name": "app",
+  "description": "prompts user before going to application",
+  "start_url": "/",
+  "display": "standalone"
+}

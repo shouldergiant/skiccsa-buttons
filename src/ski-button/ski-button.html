@@ -1,0 +1,59 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="ski-button">
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding-top:20px;
+      }
+
+      #ski-button{
+        display:block;
+      }
+
+
+
+    </style>
+    <label id="ski-button">Have you skied with us before?</label>
+    <paper-radio-group>
+      <paper-radio-button name="yes" noink>Yes</paper-radio-button>
+      <paper-radio-button name="no"noink>No</paper-radio-button>
+    </paper-radio-group>
+    <!-- Should display if 'yes' is picked -->
+    <div id="hide-yes">
+        <paper-input placeholder="First Name"></paper-input>
+        <paper-input placeholder="Last Name"></paper-input>
+        <gold-phone-input></gold-phone-input>
+        <label for="date-picker">Date of birth:</label>
+        <vaadin-date-picker></vaadin-date-picker>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class SkiButton extends Polymer.Element {
+      static get is() { return 'ski-button'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'Student Application'
+          },
+          prop2: {
+            type: String,
+            value: 'Volunteer Application'
+          }
+        }
+      }
+      // clickYes() {
+      //   document.getElementById('hide-yes').style.display="block";
+      // };
+    }
+
+    window.customElements.define(SkiButton.is, SkiButton);
+  </script>
+</dom-module>

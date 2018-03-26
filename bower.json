@@ -1,0 +1,23 @@
+{
+  "name": "app",
+  "description": "prompts user before going to application",
+  "main": "index.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "paper-elements": "PolymerElements/paper-elements#^1.0.7",
+    "paper-radio-button": "PolymerElements/paper-radio-button#^2.1.0",
+    "paper-input": "PolymerElements/paper-input#^2.2.0",
+    "gold-phone-input": "PolymerElements/gold-phone-input#^2.1.0",
+    "vaadin-date-picker": "^2.0.7",
+    "paper-radio-group": "PolymerElements/paper-radio-group#^2.2.0",
+    "iron-dropdown": "PolymerElements/iron-dropdown#^2.2.0"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  },
+  "resolutions": {
+    "iron-a11y-announcer": "^2.0.0",
+    "webcomponentsjs": "^1.0.0"
+  }
+}
