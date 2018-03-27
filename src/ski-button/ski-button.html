@@ -1,4 +1,10 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/gold-phone-input/gold-phone-input.html">
+<link rel="import" href="../../bower_components/vaadin-date-picker/vaadin-date-picker.html">
 
 <dom-module id="ski-button">
   <template>
@@ -8,26 +14,21 @@
         padding-top:20px;
       }
 
-      #ski-button{
-        display:block;
-      }
-
-
-
     </style>
-    <label id="ski-button">Have you skied with us before?</label>
+    <label>Have you skied with us before?</label>
     <paper-radio-group>
-      <paper-radio-button name="yes" noink>Yes</paper-radio-button>
-      <paper-radio-button name="no"noink>No</paper-radio-button>
+        <paper-radio-button checked="{{skiedBefore}}" >Yes</paper-radio-button>
+        <paper-radio-button checked="{{!skiedBefore}}" >No</paper-radio-button>
     </paper-radio-group>
-    <!-- Should display if 'yes' is picked -->
-    <div id="hide-yes">
-        <paper-input placeholder="First Name"></paper-input>
-        <paper-input placeholder="Last Name"></paper-input>
-        <gold-phone-input></gold-phone-input>
-        <label for="date-picker">Date of birth:</label>
-        <vaadin-date-picker></vaadin-date-picker>
-    </div>
+
+    <template is="dom-if" if="[[skiedBefore]]">
+            <h3>Glad to have you back! Lets see if we can find you</h3>
+
+            <paper-input placeholder="First Name"></paper-input>
+            <paper-input placeholder="Last Name"></paper-input>
+            <gold-phone-input placeholder="Cell Phone"></gold-phone-input>
+            <vaadin-date-picker placeholder='Date of Birth'></vaadin-date-picker>
+    </template>
   </template>
 
   <script>
@@ -39,19 +40,17 @@
       static get is() { return 'ski-button'; }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'Student Application'
+ 
+          skiedBefore: {
+            type: Boolean,
+            value: false 
           },
-          prop2: {
-            type: String,
-            value: 'Volunteer Application'
+          person: {
+              type: Object,
+              value: function() { return {}; } 
           }
         }
       }
-      // clickYes() {
-      //   document.getElementById('hide-yes').style.display="block";
-      // };
     }
 
     window.customElements.define(SkiButton.is, SkiButton);
