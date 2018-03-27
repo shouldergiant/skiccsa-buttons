@@ -6,7 +6,7 @@
 <link rel="import" href="../../bower_components/gold-phone-input/gold-phone-input.html">
 <link rel="import" href="../../bower_components/vaadin-date-picker/vaadin-date-picker.html">
 
-<dom-module id="ski-button">
+<dom-module id="app-entry">
   <template>
     <style>
       :host {
@@ -14,21 +14,28 @@
         padding-top:20px;
       }
 
+      paper-button{
+        background: green;
+  color: yellow;
+      }
+
     </style>
-    <label>Have you skied with us before?</label>
+    <label>Have you every applied to the CCSA before?</label>
     <paper-radio-group>
-        <paper-radio-button checked="{{skiedBefore}}" >Yes</paper-radio-button>
-        <paper-radio-button checked="{{!skiedBefore}}" >No</paper-radio-button>
+        <paper-radio-button checked="{{skiedBefore}}">Yes</paper-radio-button>
+        <paper-radio-button checked="{{!skiedBefore}}">No</paper-radio-button>
     </paper-radio-group>
 
     <template is="dom-if" if="[[skiedBefore]]">
-            <h3>Glad to have you back! Lets see if we can find you</h3>
+            <h3>Glad you are back! Lets see if we can find you...</h3>
 
-            <paper-input placeholder="First Name"></paper-input>
-            <paper-input placeholder="Last Name"></paper-input>
-            <gold-phone-input placeholder="Cell Phone"></gold-phone-input>
-            <vaadin-date-picker placeholder='Date of Birth'></vaadin-date-picker>
+            <paper-input value="{{data.first}}" placeholder="First Name"></paper-input>
+            <paper-input value="{{data.last}}" placeholder="Last Name"></paper-input>
+            <gold-phone-input value="{{data.phone}}"></gold-phone-input>
+            <vaadin-date-picker value="{{data.dob}}" placeholder='Date of Birth'></vaadin-date-picker>
     </template>
+
+    <paper-button raised on-click="continue">Continue</paper-button>
   </template>
 
   <script>
@@ -36,8 +43,8 @@
      * @customElement
      * @polymer
      */
-    class SkiButton extends Polymer.Element {
-      static get is() { return 'ski-button'; }
+    class AppEntry extends Polymer.Element {
+      static get is() { return 'app-entry'; }
       static get properties() {
         return {
  
@@ -45,14 +52,19 @@
             type: Boolean,
             value: false 
           },
-          person: {
+          data: {
               type: Object,
               value: function() { return {}; } 
           }
         }
       }
+
+      continue(e){
+        console.log( this.skiedBefore );
+        console.log( this.data );
+      }
     }
 
-    window.customElements.define(SkiButton.is, SkiButton);
+    window.customElements.define(AppEntry.is, AppEntry);
   </script>
 </dom-module>
