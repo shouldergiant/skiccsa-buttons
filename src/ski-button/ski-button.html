@@ -5,6 +5,9 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/gold-phone-input/gold-phone-input.html">
 <link rel="import" href="../../bower_components/vaadin-date-picker/vaadin-date-picker.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 
 <dom-module id="app-entry">
   <template>
@@ -16,26 +19,30 @@
 
       paper-button{
         background: green;
-  color: yellow;
+        color: yellow;
+      }
+
+      paper-card{
+        padding: 15px;
       }
 
     </style>
+    <paper-card>
     <label>Have you every applied to the CCSA before?</label>
     <paper-radio-group>
         <paper-radio-button checked="{{skiedBefore}}">Yes</paper-radio-button>
         <paper-radio-button checked="{{!skiedBefore}}">No</paper-radio-button>
     </paper-radio-group>
 
-    <template is="dom-if" if="[[skiedBefore]]">
-            <h3>Glad you are back! Lets see if we can find you...</h3>
-
+    
+    <template is="dom-if" if=[[skiedBefore]]><h3>Glad you are back! Lets see if we can find you...</h3></template>
             <paper-input value="{{data.first}}" placeholder="First Name"></paper-input>
             <paper-input value="{{data.last}}" placeholder="Last Name"></paper-input>
             <gold-phone-input value="{{data.phone}}"></gold-phone-input>
             <vaadin-date-picker value="{{data.dob}}" placeholder='Date of Birth'></vaadin-date-picker>
-    </template>
-
-    <paper-button raised on-click="continue">Continue</paper-button>
+            <paper-toast text="Please enter email and phone number"></paper-toast>
+    <p><paper-button raised on-click="continue">Continue</paper-button></p>
+    </paper-card>
   </template>
 
   <script>
@@ -55,10 +62,9 @@
           data: {
               type: Object,
               value: function() { return {}; } 
+            }
           }
-        }
-      }
-
+        } 
       continue(e){
         console.log( this.skiedBefore );
         console.log( this.data );
