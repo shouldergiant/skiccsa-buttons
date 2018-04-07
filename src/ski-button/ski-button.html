@@ -32,19 +32,16 @@
     <paper-radio-group>
         <paper-radio-button checked="{{skiedBefore}}">Yes</paper-radio-button>
         <paper-radio-button checked="{{!skiedBefore}}">No</paper-radio-button>
-    </paper-radio-group>
-
-    
+    </paper-radio-group>    
     <template is="dom-if" if=[[skiedBefore]]><h3>Glad you are back! Lets see if we can find you...</h3></template>
             <paper-input value="{{data.first}}" placeholder="First Name"></paper-input>
             <paper-input value="{{data.last}}" placeholder="Last Name"></paper-input>
             <gold-phone-input value="{{data.phone}}"></gold-phone-input>
             <vaadin-date-picker value="{{data.dob}}" placeholder='Date of Birth'></vaadin-date-picker>
-            <paper-toast text="Please enter email and phone number"></paper-toast>
     <p><paper-button raised on-click="continue">Continue</paper-button></p>
     </paper-card>
+    <paper-toast id="toast" text="Please enter email and phone number"></paper-toast>
   </template>
-
   <script>
     /**
      * @customElement
@@ -54,7 +51,6 @@
       static get is() { return 'app-entry'; }
       static get properties() {
         return {
- 
           skiedBefore: {
             type: Boolean,
             value: false 
@@ -64,13 +60,15 @@
               value: function() { return {}; } 
             }
           }
-        } 
+        }
       continue(e){
+        if(this.data.dob === "" || this.data.phone === ""){
+          return this.$.toast.open();
+        }
         console.log( this.skiedBefore );
         console.log( this.data );
       }
     }
-
     window.customElements.define(AppEntry.is, AppEntry);
   </script>
 </dom-module>
