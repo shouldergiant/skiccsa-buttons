@@ -1,6 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
-<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/gold-phone-input/gold-phone-input.html">
@@ -8,6 +7,8 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+
 
 <dom-module id="app-entry">
   <template>
@@ -26,21 +27,35 @@
         padding: 15px;
       }
 
+      paper-card{
+        padding: 15px;
+      }
+
     </style>
     <paper-card>
-    <label>Have you every applied to the CCSA before?</label>
-    <paper-radio-group>
-        <paper-radio-button checked="{{skiedBefore}}">Yes</paper-radio-button>
-        <paper-radio-button checked="{{!skiedBefore}}">No</paper-radio-button>
-    </paper-radio-group>    
-    <template is="dom-if" if=[[skiedBefore]]><h3>Glad you are back! Lets see if we can find you...</h3></template>
-            <paper-input value="{{data.first}}" placeholder="First Name"></paper-input>
-            <paper-input value="{{data.last}}" placeholder="Last Name"></paper-input>
-            <gold-phone-input value="{{data.phone}}"></gold-phone-input>
-            <vaadin-date-picker value="{{data.dob}}" placeholder='Date of Birth'></vaadin-date-picker>
-    <p><paper-button raised on-click="continue">Continue</paper-button></p>
+      <label>Have you every applied to the CCSA before?</label>
+      <iron-form id='findform'>
+        <form method="post" action="https://new.skiccsa.org/vapp">
+          <paper-radio-group>
+              <paper-radio-button checked="{{skiedBefore}}">Yes</paper-radio-button>
+              <paper-radio-button checked="{{!skiedBefore}}">No</paper-radio-button>
+          </paper-radio-group>
+
+          <template is="dom-if" if="[[skiedBefore]]">
+                  <h3>Glad you are back! Lets see if we can find you...</h3>
+          </template>
+
+          <paper-input id='first' value="{{data.first}}" required placeholder="First Name"></paper-input>
+          <paper-input id='last' value="{{data.last}}" required placeholder="Last Name"></paper-input>
+          <gold-phone-input value="{{data.phone}}"></gold-phone-input>
+          <paper-input type="email" auto-validate value="{{data.email}}" placeholder="Email"></paper-input>
+          <vaadin-date-picker required value="{{data.dob}}" placeholder='Date of Birth'></vaadin-date-picker>
+
+          <paper-button raised on-click="continue">Continue</paper-button>
+        </form>
+      </iron-form>
     </paper-card>
-    <paper-toast id="toast" text="Please enter email and phone number"></paper-toast>
+    <paper-toast id="toast" text="Please enter email and/or phone number"></paper-toast>
   </template>
   <script>
     /**
@@ -62,8 +77,19 @@
           }
         }
       continue(e){
-        if(this.data.dob === "" || this.data.phone === ""){
-          return this.$.toast.open();
+        var valid = this.$.findform.validate();
+        if( this.data.first && this.data.first.length < 2 ){
+          this.$.first.invalid = true;
+          valid = false;
+        }
+        if( this.data.last && this.data.first.length < 2 ){
+          this.$.last.invalid = true;
+          valid = false;
+        }
+        if( !this.data.dob && !this.data.email ){
+          this.$.toast.text= "Either phone number or Email must be supplied"
+          this.$.toast.open();
+          valid = false;
         }
         console.log( this.skiedBefore );
         console.log( this.data );
