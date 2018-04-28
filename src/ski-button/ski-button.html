@@ -8,6 +8,7 @@
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 
 
 <dom-module id="app-entry">
@@ -21,6 +22,10 @@
       paper-button{
         background: green;
         color: yellow;
+        display: block;
+        margin: 5px auto;
+        width: 50%;
+        text-align: center;
       }
 
       paper-card{
@@ -30,6 +35,8 @@
       paper-card{
         padding: 15px;
       }
+
+
 
     </style>
     <paper-card>
@@ -44,13 +51,13 @@
           <template is="dom-if" if="[[skiedBefore]]">
                   <h3>Glad you are back! Lets see if we can find you...</h3>
           </template>
-
           <paper-input id='first' value="{{data.first}}" required placeholder="First Name"></paper-input>
           <paper-input id='last' value="{{data.last}}" required placeholder="Last Name"></paper-input>
           <gold-phone-input value="{{data.phone}}"></gold-phone-input>
+          <paper-checkbox checked="{{textable}}">Can we text you at this number in the the future?</paper-checkbox>
           <paper-input type="email" auto-validate value="{{data.email}}" placeholder="Email"></paper-input>
           <vaadin-date-picker required value="{{data.dob}}" placeholder='Date of Birth'></vaadin-date-picker>
-
+          <br/>
           <paper-button raised on-click="continue">Continue</paper-button>
         </form>
       </iron-form>
@@ -73,6 +80,10 @@
           data: {
               type: Object,
               value: function() { return {}; } 
+            },
+            textable:{
+              type: Boolean,
+              value: false
             }
           }
         }
@@ -86,13 +97,14 @@
           this.$.last.invalid = true;
           valid = false;
         }
-        if( !this.data.dob && !this.data.email ){
-          this.$.toast.text= "Either phone number or Email must be supplied"
+        if( !this.data.phone && !this.data.email ){
+          this.$.toast.text= "Either phone number or Email must be supplied";
           this.$.toast.open();
           valid = false;
         }
         console.log( this.skiedBefore );
         console.log( this.data );
+        console.log( this.textable);
       }
     }
     window.customElements.define(AppEntry.is, AppEntry);
